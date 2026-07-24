@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import {Plus, Trash2, ArrowRight, Boxes} from 'lucide-react';
+import { Plus, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { tenantsApi } from '../../api/tenants';
 import { getApiError } from '../../api/client';
@@ -10,29 +10,13 @@ import type { CreateTenantRequest } from '../../types/api';
 
 export function TenantsPage() {
     const [showCreate, setShowCreate] = useState(false);
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const { data: tenants, isLoading } = useQuery({
         queryKey: ['tenants'],
         queryFn: tenantsApi.getAll,
     });
-
-    const deleteMutation = useMutation({
-        mutationFn: tenantsApi.delete,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tenants'] });
-            toast.success('Tenant deleted');
-        },
-        onError: (error) => {
-            toast.error(getApiError(error).detail ?? 'Failed to delete');
-        },
-    });
-
-    const handleDelete = (id: string, name: string) => {
-        if (confirm(`Delete tenant "${name}"?`)) {
-            deleteMutation.mutate(id);
-        }
-    };
 
     return (
         <div className="space-y-6">
@@ -68,15 +52,19 @@ export function TenantsPage() {
                             <th className="px-5 py-3 text-left text-xs font-medium uppercase text-gray-500">Code</th>
                             <th className="px-5 py-3 text-left text-xs font-medium uppercase text-gray-500">Status</th>
                             <th className="px-5 py-3 text-left text-xs font-medium uppercase text-gray-500">Locale</th>
-                            <th className="px-5 py-3 text-right text-xs font-medium uppercase text-gray-500">Actions</th>
+                            <th className="px-5 py-3"></th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                         {tenants.map((tenant) => (
-                            <tr key={tenant.id} className="hover:bg-gray-50">
-                                <td className="px-5 py-3 text-sm font-medium text-gray-900">{tenant.name}</td>
-                                <td className="px-5 py-3 text-sm text-gray-500">{tenant.code}</td>
-                                <td className="px-5 py-3">
+                            <tr
+                                key={tenant.id}
+                                onClick={() => navigate(`/tenants/${tenant.id}`)}
+                                className="cursor-pointer hover:bg-gray-50"
+                            >
+                                <td className="px-5 py-3.5 text-sm font-medium text-gray-900">{tenant.name}</td>
+                                <td className="px-5 py-3.5 text-sm text-gray-500">{tenant.code}</td>
+                                <td className="px-5 py-3.5">
                     <span
                         className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
                             tenant.status === 'Active'
@@ -87,31 +75,9 @@ export function TenantsPage() {
                       {tenant.status}
                     </span>
                                 </td>
-                                <td className="px-5 py-3 text-sm text-gray-500">{tenant.defaultLocale}</td>
-                                <td className="px-5 py-3 text-right">
-                                    <div className="flex items-center justify-end gap-1">
-                                        <Link
-                                            to={`/tenants/${tenant.id}/departments`}
-                                            className="rounded p-1 text-gray-400 hover:bg-blue-50 hover:text-blue-600"
-                                            title="Manage departments"
-                                        >
-                                            <ArrowRight className="h-4 w-4" />
-                                        </Link>
-                                        <Link
-                                            to={`/tenants/${tenant.id}/department-types`}
-                                            className="rounded p-1 text-gray-400 hover:bg-purple-50 hover:text-purple-600"
-                                            title="Department types"
-                                        >
-                                            <Boxes className="h-4 w-4" />
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDelete(tenant.id, tenant.name)}
-                                            className="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
-                                            title="Delete"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </button>
-                                    </div>
+                                <td className="px-5 py-3.5 text-sm text-gray-500">{tenant.defaultLocale}</td>
+                                <td className="px-5 py-3.5 text-right">
+                                    <ChevronRight className="ml-auto h-4 w-4 text-gray-400" />
                                 </td>
                             </tr>
                         ))}
