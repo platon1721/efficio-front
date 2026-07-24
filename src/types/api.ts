@@ -33,6 +33,7 @@ export interface UserInfo {
     firstName?: string;
     lastName?: string;
     isPlatformAdmin: boolean;
+    isGodAdmin: boolean;
 }
 
 // ==================== Tenants ====================

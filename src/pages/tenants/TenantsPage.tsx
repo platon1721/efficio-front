@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { Plus, Trash2 } from 'lucide-react';
+import {Plus, Trash2, ArrowRight, Boxes} from 'lucide-react';
 import { toast } from 'sonner';
 import { tenantsApi } from '../../api/tenants';
 import { getApiError } from '../../api/client';
@@ -88,13 +89,29 @@ export function TenantsPage() {
                                 </td>
                                 <td className="px-5 py-3 text-sm text-gray-500">{tenant.defaultLocale}</td>
                                 <td className="px-5 py-3 text-right">
-                                    <button
-                                        onClick={() => handleDelete(tenant.id, tenant.name)}
-                                        className="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
-                                        title="Delete"
-                                    >
-                                        <Trash2 className="h-4 w-4" />
-                                    </button>
+                                    <div className="flex items-center justify-end gap-1">
+                                        <Link
+                                            to={`/tenants/${tenant.id}/departments`}
+                                            className="rounded p-1 text-gray-400 hover:bg-blue-50 hover:text-blue-600"
+                                            title="Manage departments"
+                                        >
+                                            <ArrowRight className="h-4 w-4" />
+                                        </Link>
+                                        <Link
+                                            to={`/tenants/${tenant.id}/department-types`}
+                                            className="rounded p-1 text-gray-400 hover:bg-purple-50 hover:text-purple-600"
+                                            title="Department types"
+                                        >
+                                            <Boxes className="h-4 w-4" />
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDelete(tenant.id, tenant.name)}
+                                            className="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
+                                            title="Delete"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -107,8 +124,6 @@ export function TenantsPage() {
         </div>
     );
 }
-
-// ==================== Create Form ====================
 
 function CreateTenantForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
     const {
@@ -150,20 +165,9 @@ function CreateTenantForm({ onClose, onSuccess }: { onClose: () => void; onSucce
                         {errors.code && <p className="mt-1 text-xs text-red-600">{errors.code.message}</p>}
                     </div>
                 </div>
-
                 <div className="flex justify-end gap-2 pt-2">
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
-                    >
+                    <button type="button" onClick={onClose} className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                    <button type="submit" disabled={isSubmitting} className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50">
                         {isSubmitting ? 'Creating...' : 'Create'}
                     </button>
                 </div>

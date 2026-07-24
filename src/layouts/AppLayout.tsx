@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { LogOut, Building2, LayoutDashboard } from 'lucide-react';
+import { LogOut, Building2, LayoutDashboard, Boxes, Key } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '../auth/AuthProvider';
 
@@ -36,6 +36,29 @@ export function AppLayout() {
                         <Building2 className="h-4 w-4" />
                         Tenants
                     </Link>
+
+                    {/* Platform Admin section */}
+                    {user?.isPlatformAdmin && (
+                        <>
+                            <div className="pt-4 pb-1 px-3">
+                                <p className="text-xs font-semibold uppercase text-gray-400">Platform</p>
+                            </div>
+                            <Link
+                                to="/modules"
+                                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                            >
+                                <Boxes className="h-4 w-4" />
+                                Modules
+                            </Link>
+                            <Link
+                                to="/permissions"
+                                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                            >
+                                <Key className="h-4 w-4" />
+                                Permissions
+                            </Link>
+                        </>
+                    )}
                 </nav>
 
                 {/* User footer */}

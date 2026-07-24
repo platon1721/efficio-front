@@ -8,6 +8,7 @@ import { TenantsPage } from './pages/tenants/TenantsPage';
 import { DepartmentsPage } from './pages/departments/DepartmentsPage';
 import { ModulesPage } from './pages/security/ModulesPage';
 import { PermissionsPage } from './pages/security/PermissionsPage';
+import { DepartmentTypesPage } from './pages/departments/DepartmentTypesPage';
 
 export const router = createBrowserRouter([
     // Public routes
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
                     { path: '/tenants/:tenantId/departments', element: <DepartmentsPage /> },
                     { path: '/modules', element: <ModulesPage /> },
                     { path: '/permissions', element: <PermissionsPage /> },
+                    { path: '/tenants/:tenantId/department-types', element: <DepartmentTypesPage /> },
                 ],
             },
         ],
