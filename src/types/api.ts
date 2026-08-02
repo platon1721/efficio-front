@@ -195,3 +195,46 @@ export interface ApiError {
     detail?: string;
     errors?: Record<string, string[]>;
 }
+
+// ==================== My Context ====================
+// Add these to src/types/api.ts
+
+export interface MyUser {
+    id: string;
+    email: string;
+    isPlatformAdmin: boolean;
+    isGodAdmin: boolean;
+}
+
+export interface MyWorkDepartment {
+    departmentId: string;
+    name: string;
+    departmentTypeName?: string;
+    roleName: string;
+}
+
+export interface MyManagedSubtree {
+    rootDepartmentId: string;
+    rootDepartmentName: string;
+    canManageAll: boolean;
+}
+
+export interface MyTenant {
+    tenantId: string;
+    name: string;
+    code: string;
+    rootDepartmentId: string;
+    modules: string[];
+    workDepartments: MyWorkDepartment[];
+    managedSubtree: MyManagedSubtree | null;
+}
+
+export interface MyContext {
+    user: MyUser;
+    tenants: MyTenant[];
+}
+
+export interface MyPermissions {
+    departmentId: string;
+    permissions: string[];
+}
