@@ -3,17 +3,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
 import { Toaster } from 'sonner';
 import { AuthProvider } from './auth/AuthProvider';
+import { AccessProvider } from './access/AccessProvider';
 import { router } from './router';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      staleTime: 30 * 1000,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
     return (
@@ -35,14 +28,16 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 }
 
 export default function App() {
-  return (
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <RouterProvider router={router} />
-            <Toaster position="top-right" richColors closeButton />
-          </AuthProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
-  );
+    return (
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <AccessProvider>
+                        <RouterProvider router={router} />
+                        <Toaster position="top-right" richColors closeButton />
+                    </AccessProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+        </ErrorBoundary>
+    );
 }

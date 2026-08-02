@@ -197,7 +197,6 @@ export interface ApiError {
 }
 
 // ==================== My Context ====================
-// Add these to src/types/api.ts
 
 export interface MyUser {
     id: string;
