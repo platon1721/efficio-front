@@ -6,12 +6,14 @@ import { Plus, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { tenantsApi } from '../../api/tenants';
 import { getApiError } from '../../api/client';
+import { useAccess } from '../../access/AccessProvider';
 import type { CreateTenantRequest } from '../../types/api';
 
 export function TenantsPage() {
     const [showCreate, setShowCreate] = useState(false);
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const { isPlatformAdmin } = useAccess();
 
     const { data: tenants, isLoading } = useQuery({
         queryKey: ['tenants'],
@@ -22,13 +24,15 @@ export function TenantsPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-gray-900">Tenants</h1>
-                <button
-                    onClick={() => setShowCreate(true)}
-                    className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                >
-                    <Plus className="h-4 w-4" />
-                    Create Tenant
-                </button>
+                {isPlatformAdmin && (
+                    <button
+                        onClick={() => setShowCreate(true)}
+                        className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                    >
+                        <Plus className="h-4 w-4" />
+                        Create Tenant
+                    </button>
+                )}
             </div>
 
             {showCreate && (

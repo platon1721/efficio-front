@@ -39,6 +39,8 @@ export function AccessProvider({ children }: { children: ReactNode }) {
         queryKey: ['my-context'],
         queryFn: myApi.getContext,
         staleTime: 5 * 60 * 1000, // 5 min — context doesn't change often
+        enabled: !!localStorage.getItem('efficio_token'), // only when logged in
+        retry: false, // don't hammer /my/context on 401
     });
 
     const [activeTenantId, setActiveTenantIdState] = useState<string | null>(
