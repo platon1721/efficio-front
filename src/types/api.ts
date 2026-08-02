@@ -92,6 +92,7 @@ export interface CreateDepartmentRequest {
     name: string;
     description?: string;
     departmentTypeId: string;
+    parentDepartmentId: string;
 }
 
 export interface UpdateDepartmentRequest {

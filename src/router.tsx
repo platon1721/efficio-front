@@ -7,6 +7,7 @@ import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { TenantsPage } from './pages/tenants/TenantsPage';
 import { TenantDetailPage } from './pages/tenants/TenantDetailPage.tsx';
 import { DepartmentsPage } from './pages/departments/DepartmentsPage';
+import { DepartmentDetailPage } from './pages/departments/DepartmentDetailPage';
 import { ModulesPage } from './pages/security/ModulesPage';
 import { PermissionsPage } from './pages/security/PermissionsPage';
 import { DepartmentTypesPage } from './pages/departments/DepartmentTypesPage';
@@ -27,8 +28,10 @@ export const router = createBrowserRouter([
                     { path: '/', element: <DashboardPage /> },
                     { path: '/tenants', element: <TenantsPage /> },
                     { path: '/tenants/:tenantId', element: <TenantDetailPage /> },
+                    // Tenant departments
                     { path: '/tenants/:tenantId/departments', element: <DepartmentsPage /> },
                     { path: '/tenants/:tenantId/department-types', element: <DepartmentTypesPage /> },
+                    { path: '/tenants/:tenantId/departments/:departmentId', element: <DepartmentDetailPage /> },
                     // Modules
                     { path: '/modules', element: <ModulesPage /> },
                     // Permissions
