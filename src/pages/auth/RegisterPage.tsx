@@ -5,6 +5,8 @@ import { useAuth } from '../../auth/AuthProvider';
 import { getApiError } from '../../api/client';
 
 interface RegisterForm {
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -22,7 +24,12 @@ export function RegisterPage() {
 
     const onSubmit = async (data: RegisterForm) => {
         try {
-            await registerUser(data.email, data.password);
+            await registerUser({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                password: data.password,
+            });
             toast.success('Account created successfully');
             navigate('/');
         } catch (error) {
@@ -46,6 +53,40 @@ export function RegisterPage() {
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                                First name
+                            </label>
+                            <input
+                                id="firstName"
+                                type="text"
+                                autoComplete="given-name"
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                {...register('firstName', { required: 'Required' })}
+                            />
+                            {errors.firstName && (
+                                <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                                Last name
+                            </label>
+                            <input
+                                id="lastName"
+                                type="text"
+                                autoComplete="family-name"
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                {...register('lastName', { required: 'Required' })}
+                            />
+                            {errors.lastName && (
+                                <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>
+                            )}
+                        </div>
+                    </div>
+
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                             Email

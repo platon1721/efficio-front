@@ -112,7 +112,7 @@ export function AccessProvider({ children }: { children: ReactNode }) {
     const value: AccessContextValue = {
         context: context ?? null,
         isLoading,
-        isPlatformAdmin: context?.user.isPlatformAdmin ?? false,
+        isPlatformAdmin: (context?.user.isPlatformAdmin || context?.user.isGodAdmin) ?? false,
         isGodAdmin: context?.user.isGodAdmin ?? false,
         activeTenant,
         setActiveTenantId,
