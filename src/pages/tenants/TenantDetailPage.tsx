@@ -90,10 +90,10 @@ export function TenantDetailPage() {
                     comingSoon
                 />
                 <SectionCard
-                    icon={<Users className="h-5 w-5 text-gray-400" />}
+                    to={`/tenants/${tenantId}/members`}
+                    icon={<Users className="h-5 w-5 text-blue-600" />}
                     title="Members"
                     description="Invite users, assign roles, and manage access."
-                    comingSoon
                 />
                 <SectionCard
                     icon={<Settings className="h-5 w-5 text-gray-400" />}

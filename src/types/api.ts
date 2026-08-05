@@ -237,3 +237,20 @@ export interface MyPermissions {
     departmentId: string;
     permissions: string[];
 }
+
+// ==================== Members ====================
+
+export interface MemberRole {
+    departmentId: string;
+    departmentName: string;
+    roleName: string;
+}
+
+export interface TenantMember {
+    userId: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    status: string;
+    roles: MemberRole[];
+}

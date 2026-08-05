@@ -11,6 +11,7 @@ import { DepartmentDetailPage } from './pages/departments/DepartmentDetailPage';
 import { ModulesPage } from './pages/security/ModulesPage';
 import { PermissionsPage } from './pages/security/PermissionsPage';
 import { DepartmentTypesPage } from './pages/departments/DepartmentTypesPage';
+import { MembersPage } from './pages/members/MembersPage';
 
 export const router = createBrowserRouter([
     // Public routes
@@ -36,6 +37,8 @@ export const router = createBrowserRouter([
                     { path: '/modules', element: <ModulesPage /> },
                     // Permissions
                     { path: '/permissions', element: <PermissionsPage /> },
+                    // Members
+                    { path: '/tenants/:tenantId/members', element: <MembersPage /> },
                 ],
             },
         ],
