@@ -12,6 +12,7 @@ import { ModulesPage } from './pages/security/ModulesPage';
 import { PermissionsPage } from './pages/security/PermissionsPage';
 import { DepartmentTypesPage } from './pages/departments/DepartmentTypesPage';
 import { MembersPage } from './pages/members/MembersPage';
+import { RolesPage } from './pages/security/RolesPage';
 
 export const router = createBrowserRouter([
     // Public routes
@@ -39,6 +40,8 @@ export const router = createBrowserRouter([
                     { path: '/permissions', element: <PermissionsPage /> },
                     // Members
                     { path: '/tenants/:tenantId/members', element: <MembersPage /> },
+                    // Roles
+                    { path: '/tenants/:tenantId/departments/:departmentId/roles', element: <RolesPage /> },
                 ],
             },
         ],

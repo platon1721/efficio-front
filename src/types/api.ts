@@ -254,3 +254,32 @@ export interface TenantMember {
     status: string;
     roles: MemberRole[];
 }
+
+// ==================== Roles ====================
+export interface Role {
+    id: string;
+    tenantRootDepartmentId: string;
+    departmentId: string;
+    name: string;
+    description?: string;
+    departmentName?: string;
+    appliesToSubtree: boolean;
+    fullAccess: boolean;
+}
+
+export interface RoleWithPermissions extends Role {
+    permissions: Permission[];
+}
+
+export interface CreateRoleRequest {
+    departmentId: string;
+    name: string;
+    description?: string;
+    appliesToSubtree: boolean;
+}
+
+export interface UpdateRoleRequest {
+    name: string;
+    description?: string;
+    appliesToSubtree: boolean;
+}

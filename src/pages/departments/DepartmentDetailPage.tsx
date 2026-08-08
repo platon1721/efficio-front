@@ -138,10 +138,10 @@ export function DepartmentDetailPage() {
             {/* Other management sections */}
             <div className="grid gap-3 sm:grid-cols-2">
                 <SectionCard
-                    icon={<Shield className="h-5 w-5 text-gray-400" />}
+                    to={`/tenants/${tenantId}/departments/${departmentId}/roles`}
+                    icon={<Shield className="h-5 w-5 text-blue-600" />}
                     title="Roles"
                     description="Define roles and assign permissions for this department."
-                    comingSoon
                 />
                 <SectionCard
                     icon={<Users className="h-5 w-5 text-gray-400" />}
